@@ -1,6 +1,6 @@
 (function(window) {
   "use strict";
-  var SERVER_URL = "http://localhost:2403/userverification";
+  var SERVER_URL = "http://localhost:2404/usersverfi";
   var App = window.App;
   var SignupFormHandler = App.SignupFormHandler;
   var RemoteDataStore = App.RemoteDataStore;
@@ -13,6 +13,6 @@
   signUpFormHandler.addPasswordInputHandler();
   signUpFormHandler.addRePasswordInputHandler();
   signUpFormHandler.addNextButtonHandler(function(signupuserdata) {
-    userData.createUserData.call(userData, signupuserdata);
+    userData.createUserAccount.call(userData, signupuserdata);
   });
 })(window);

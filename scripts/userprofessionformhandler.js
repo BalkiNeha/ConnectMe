@@ -22,8 +22,12 @@
   UserProfessionFormHandler.prototype.addInputHandler = function() {
     $("#profession").on("keypress", function(event) {
       if (event.keyCode === 13) {
+        var count = 0;
+        var interestarray = [".professiondiv1", ".professiondiv2", ".professiondiv3"];
+        $("#warningmessage").text("");
+        $("#warningmessage").css("background-color", "white");
         var professionvalue = $("#profession").val();
-        if ($(".professiondiv1").css("display") === "none") {
+        if ($(".professiondiv1").css("display") === "none" && professionvalue != "") {
           $(".profession1").text(professionvalue);
           $(".professiondiv1").css("display", "block");
           $("#profession").val("");
@@ -31,28 +35,80 @@
             $("#closebutton1").click(function() {
               $(".profession1").text("");
               $(".professiondiv1").css("display", "none");
+              var count = 0;
+              for (var i = 0; i < 3; i++) {
+                if ($(interestarray[i]).css("display") === "block") {
+                  count++;
+                }
+              }
+              if (count < 1) {
+                $("#nextbutton").prop("disabled", true);
+              }
             });
           });
-        } else if ($(".professiondiv2").css("display") === "none") {
-          $(".profession2").text(professionvalue);
-          $(".professiondiv2").css("display", "block");
-          $("#profession").val("");
-          $(document).ready(function() {
-            $("#closebutton2").click(function() {
-              $(".profession2").text("");
-              $(".professiondiv2").css("display", "none");
+        } else if ($(".professiondiv2").css("display") === "none" && professionvalue != "") {
+          var tempprofession1 = $(".profession1").text();
+          if (tempprofession1 === professionvalue) {
+            $("#warningmessage").text("Duplicate entries are not allowed.");
+            $("#warningmessage").css("background-color", "yellow");
+          } else {
+            $(".profession2").text(professionvalue);
+            $(".professiondiv2").css("display", "block");
+            $("#profession").val("");
+            $(document).ready(function() {
+              $("#closebutton2").click(function() {
+                $(".profession2").text("");
+                $(".professiondiv2").css("display", "none");
+                var count = 0;
+                for (var i = 0; i < 3; i++) {
+                  if ($(interestarray[i]).css("display") === "block") {
+                    count++;
+                  }
+                }
+                if (count < 1) {
+                  $("#nextbutton").prop("disabled", true);
+                }
+              });
             });
-          });
-        } else if ($(".professiondiv3").css("display") === "none") {
-          $(".profession3").text(professionvalue);
-          $(".professiondiv3").css("display", "block");
-          $("#profession").val("");
-          $(document).ready(function() {
-            $("#closebutton3").click(function() {
-              $(".profession3").text("");
-              $(".professiondiv3").css("display", "none");
+          }
+        } else if ($(".professiondiv3").css("display") === "none" && professionvalue != "") {
+          var tempProfession1 = $(".profession1").text();
+          var tempProfession2 = $(".profession2").text();
+          if (tempProfession1 === professionvalue || tempProfession2 === professionvalue) {
+            $("#warningmessage").text("Duplicate entries are not allowed.");
+            $("#warningmessage").css("background-color", "yellow");
+          } else {
+            $(".profession3").text(professionvalue);
+            $(".professiondiv3").css("display", "block");
+            $("#profession").val("");
+            $(document).ready(function() {
+              $("#closebutton3").click(function() {
+                $(".profession3").text("");
+                $(".professiondiv3").css("display", "none");
+                var count = 0;
+                for (var i = 0; i < 3; i++) {
+                  if ($(interestarray[i]).css("display") === "block") {
+                    count++;
+                  }
+                }
+                if (count < 1) {
+                  $("#nextbutton").prop("disabled", true);
+                }
+              });
             });
-          });
+          }
+        }
+        for (var i = 0; i < 3; i++) {
+          if ($(interestarray[i]).css("display") === "block") {
+            count++;
+          }
+        }
+        if (count >= 1) {
+          $("#nextbutton").prop("disabled", false);
+        }
+        if(count === 3) {
+          $("#warningmessage").text("Maximum number of entries are reached.");
+          $("#warningmessage").css("background-color", "yellow");
         }
         event.preventDefault();
       }

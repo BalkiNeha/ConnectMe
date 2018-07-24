@@ -8,11 +8,8 @@
   LoginFormHandler.prototype.addNextButtonHandler = function(fn) {
     $(document).on("submit", function(event) {
       event.preventDefault();
-
-      this.validatepassword($("#password").val());
-
       var loginuserdata = {};
-      loginuserdata["email"] = $("#email").val();
+      loginuserdata["username"] = $("#email").val();
       loginuserdata["password"] = $("#password").val();
 
       fn(loginuserdata);
@@ -28,39 +25,41 @@
     });
   };
 
-  LoginFormHandler.prototype.validatepassword = function(password) {
+  LoginFormHandler.prototype.addPasswordInputHandler = function() {
+    $(document).on("input", "[name=\"password\"]", function(event) {
 
-    var illegalChars = /[\W_]/; // allow only letters and numbers
-    var error = "";
+      var illegalChars = /[\W_]/; // allow only letters and numbers
+      var error = "";
+      var password = event.target.value;
 
-    if (password.value == "") {
-      password.style.background = "Yellow";
-      error = "You didn't enter a password.\n";
-      $("#errormessage").text(error);
-      return false;
+      if (password == "") {
+        error = "Please enter a password.\n";
+        $("#passwordHelpInline").css("background-color", "yellow");
+        $("#passwordHelpInline").text(error);
+        $("#login").prop("disabled", true);
+        return false;
 
-    } else if ((password.value.length < 8) || (password.value.length > 12)) {
-      error = "The password is of the wrong length. \n";
-      password.style.background = "Yellow";
-      alert(error);
-      return false;
+      } else if ((password.length < 8) || (password.length > 20)) {
+        error = "The password must be 8-20 characters long.\n";
+        $("#passwordHelpInline").css("background-color", "yellow");
+        $("#passwordHelpInline").text(error);
+        $("#login").prop("disabled", true);
+        return false;
 
-    } else if (illegalChars.test(password.value)) {
-      error = "The password contains illegal characters.\n";
-      password.style.background = "Yellow";
-      alert(error);
-      return false;
+      } else if (illegalChars.test(password)) {
+        error = "The password contains illegal characters.\n";
+        $("#passwordHelpInline").css("background-color", "yellow");
+        $("#passwordHelpInline").text(error);
+        $("#login").prop("disabled", true);
+        return false;
 
-    } else if ((password.value.search(/[a-zA-Z]+/) == -1) || (password.value.search(/[0-9]+/) == -1)) {
-      error = "The password must contain at least one numeral.\n";
-      password.style.background = "Yellow";
-      alert(error);
-      return false;
-
-    } else {
-      password.style.background = "White";
-    }
-    return true;
+      } else {
+        $("#passwordHelpInline").text("");
+        $("#passwordHelpInline").css("background-color", "white");
+        $("#login").prop("disabled", false);
+      }
+      return true;
+    });
   };
 
   App.LoginFormHandler = LoginFormHandler;

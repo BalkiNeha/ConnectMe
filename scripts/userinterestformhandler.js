@@ -27,10 +27,11 @@
 
       if (event.keyCode === 13) {
         var count = 0;
+        var interestarray = [".interestdiv1", ".interestdiv2", ".interestdiv3", ".interestdiv4", ".interestdiv5"];
         $("#warningmessage").text("");
         $("#warningmessage").css("background-color", "white");
         var interestvalue = $("#interest").val();
-        if ($(".interestdiv1").css("display") === "none") {
+        if ($(".interestdiv1").css("display") === "none" && interestvalue != "") {
           $(".interest1").text(interestvalue);
           $(".interestdiv1").css("display", "block");
           $("#interest").val("");
@@ -38,15 +39,18 @@
             $("#closebutton1").click(function() {
               $(".interest1").text("");
               $(".interestdiv1").css("display", "none");
-              count--;
-              console.log("Count-- "+count);
+              var count = 0;
+              for (var i = 0; i < 5; i++) {
+                if ($(interestarray[i]).css("display") === "block") {
+                  count++;
+                }
+              }
               if (count < 3) {
                 $("#nextbutton").prop("disabled", true);
               }
             });
           });
-        } else if ($(".interestdiv2").css("display") === "none") {
-          //console.log($(".interest1").text());
+        } else if ($(".interestdiv2").css("display") === "none" && interestvalue != "") {
           var tempInterest1 = $(".interest1").text();
           if (tempInterest1 === interestvalue) {
             $("#warningmessage").text("Duplicate entries are not allowed.");
@@ -59,15 +63,19 @@
               $("#closebutton2").click(function() {
                 $(".interest2").text("");
                 $(".interestdiv2").css("display", "none");
-                count--;
-                console.log("Count-- "+count);
+                var count = 0;
+                for (var i = 0; i < 5; i++) {
+                  if ($(interestarray[i]).css("display") === "block") {
+                    count++;
+                  }
+                }
                 if (count < 3) {
                   $("#nextbutton").prop("disabled", true);
                 }
               });
             });
           }
-        } else if ($(".interestdiv3").css("display") === "none") {
+        } else if ($(".interestdiv3").css("display") === "none" && interestvalue != "") {
           var tempInt1 = $(".interest1").text();
           var tempInt2 = $(".interest2").text();
           if (tempInt1 === interestvalue || tempInt2 === interestvalue) {
@@ -81,14 +89,19 @@
               $("#closebutton3").click(function() {
                 $(".interest3").text("");
                 $(".interestdiv3").css("display", "none");
-                count--;
+                var count = 0;
+                for (var i = 0; i < 5; i++) {
+                  if ($(interestarray[i]).css("display") === "block") {
+                    count++;
+                  }
+                }
                 if (count < 3) {
                   $("#nextbutton").prop("disabled", true);
                 }
               });
             });
           }
-        } else if ($(".interestdiv4").css("display") === "none") {
+        } else if ($(".interestdiv4").css("display") === "none" && interestvalue != "") {
           var temp_Int1 = $(".interest1").text();
           var temp_Int2 = $(".interest2").text();
           var temp_Int3 = $(".interest3").text();
@@ -103,14 +116,19 @@
               $("#closebutton4").click(function() {
                 $(".interest4").text("");
                 $(".interestdiv4").css("display", "none");
-                count--;
+                var count = 0;
+                for (var i = 0; i <= 5; i++) {
+                  if ($(interestarray[i]).css("display") === "block") {
+                    count++;
+                  }
+                }
                 if (count < 3) {
                   $("#nextbutton").prop("disabled", true);
                 }
               });
             });
           }
-        } else if ($(".interestdiv5").css("display") === "none") {
+        } else if ($(".interestdiv5").css("display") === "none" && interestvalue != "") {
           var tempInt_1 = $(".interest1").text();
           var tempInt_2 = $(".interest2").text();
           var tempInt_3 = $(".interest3").text();
@@ -126,7 +144,12 @@
               $("#closebutton5").click(function() {
                 $(".interest5").text("");
                 $(".interestdiv5").css("display", "none");
-                count--;
+                var count = 0;
+                for (var i = 0; i <= 5; i++) {
+                  if ($(interestarray[i]).css("display") === "block") {
+                    count++;
+                  }
+                }
                 if (count < 3) {
                   $("#nextbutton").prop("disabled", true);
                 }
@@ -134,34 +157,22 @@
             });
           }
         }
-
-
-        //var interestarray = [".interest1", ".interest2",".interest3",".interest4",".interest5"];
-        //for()
-        if ($(interestarray[0]).text().length > 0) {
-          count++;
-        }
-        if ($(".interest2").text().length > 0) {
-          count++;
-        }
-        if ($(".interest3").text().length > 0) {
-          count++;
-        }
-        if ($(".interest4").text().length > 0) {
-          count++;
-        }
-        if ($(".interest5").text().length > 0) {
-          count++;
+        for (var i = 0; i <= 5; i++) {
+          if ($(interestarray[i]).css("display") === "block") {
+            count++;
+          }
         }
         if (count >= 3) {
           $("#nextbutton").prop("disabled", false);
         }
-        console.log("Count= "+count);
+        if(count === 5) {
+          $("#warningmessage").text("Maximum number of entries are reached.");
+          $("#warningmessage").css("background-color", "yellow");
+        }
         event.preventDefault();
       }
     });
   };
-
 
   App.UserInterestFormHandler = UserInterestFormHandler;
   window.App = App;

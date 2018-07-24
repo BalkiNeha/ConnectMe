@@ -15,6 +15,7 @@
     console.log("Inside updateuserData");
     var username = userdata.firstname + userdata.lastname;
     var professionAndLocation = "";
+    console.log("Inside updateuserData= "+username);
 
     if(userdata.profession1 != "") {
       professionAndLocation += userdata.profession1;
@@ -31,6 +32,7 @@
     $("#username").text(username);
     $("#userprofessionandlocation").text(professionAndLocation);
     $("#userpagetitle").text(userdata.pagetitle);
+    var description = "I am "
   };
 
   App.UserPageFormHandler = UserPageFormHandler;
